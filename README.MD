@@ -62,3 +62,62 @@ private int age;
     }
 }
 ```
+
+
+
+**Section 3**
+Programmatically adding beans to the Spring context
+
+We’ve had the option of programmatically adding beans to the Spring context with Spring 5, which offers great flexibility because it enables you to add new instances in the context directly by calling a method of the context instance. You’d use this approach when you want to implement a custom way of adding beans to the context and the @Bean or the stereotype annotations are not enough for your needs. Say you need to register specific beans in the Spring context depending on specific configurations of your application
+
+```
+if (condition) {  
+registerBean(b1);    
+
+} else {
+
+registerBean(b2);    
+
+}
+```
+
+We will use method
+
+```
+<T> void registerBean(
+  String beanName, 
+  Class<T> beanClass, 
+  Supplier<T> supplier, 
+  BeanDefinitionCustomizer... customizers);
+  ```
+
+
+Supplier is a functional interface in Java that represents a supplier or source of data. 
+It takes nothing and simply returns some object when called.
+
+With Supplier, the object is only created when you actually ask for it (when you call the get() method).
+
+This is useful if creating the object is resource-intensive or may not be needed at all.
+
+
+```
+public static void main(String[] args) {
+    var context = 
+      new AnnotationConfigApplicationContext();
+ 
+      Supplier<Parrot> parrotSupplier = () -> new Parrot();   
+ 
+      context.registerBean("parrot1", 
+        Parrot.class, parrotSupplier);             
+ 
+      Parrot p = context.getBean(Parrot.class);    
+      System.out.println(p.getName());             
+  }
+  
+  
+  context.registerBean("parrot1", 
+                Parrot.class, 
+                parrotSupplier, 
+                bc -> bc.setPrimary(true));
+
+```
