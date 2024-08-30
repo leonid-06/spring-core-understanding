@@ -31,3 +31,34 @@ or invokes bean by name context.getBean(<name>). If name not defined - spring
 gives name of method with Lower case first letter,
 or we can override this by @Bean(name = "china")
 
+**Section 3 Stereotype Bean define**
+With stereotype annotations, you add the annotation above the class for which you need to have an instance in the Spring context. 
+When doing so, we say that you’ve marked the class as a component. When the app creates the Spring context, 
+Spring creates an instance of the class you marked as a component and adds that instance to its context. 
+We’ll still have a configuration class when we use this approach to tell Spring where to look for the classes 
+annotated with stereotype annotations.
+
+1) Using the @Component annotation, mark the classes for which you want Spring 
+to add an instance to its context (in our case Parrot).
+2) Using @ComponentScan annotation over the configuration class, instruct 
+Spring on where to find the classes you marked.
+
+Bean must have a non-args constructor
+
+_@Bean_: Provides complete flexibility in bean creation and configuration, allowing you to specify parameters and configuration in methods.
+_@Component_: Provides simple automatic registration of beans, but with less flexibility in controlling creation and configuration, although you can use additional facilities for initialization and configuration.
+
+Use @PostConstruct to initialize bean. Constructor does not use, because constructor is called before all other dependencies are implemented into this component.
+@Component
+```public class Person {
+private String name;
+private int age;
+
+    // Конструктор и методы
+
+    @PostConstruct
+    public void init() {
+        // Инициализация после создания
+    }
+}
+```
