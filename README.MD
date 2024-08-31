@@ -46,6 +46,8 @@ Spring on where to find the classes you marked.
 Bean must have a non-args constructor
 
 _@Bean_: Provides complete flexibility in bean creation and configuration, allowing you to specify parameters and configuration in methods.
+We use the @Bean annotation to add beans to the Spring context in the cases in which we cannot change the class for which we want to add the bean.
+
 _@Component_: Provides simple automatic registration of beans, but with less flexibility in controlling creation and configuration, although you can use additional facilities for initialization and configuration.
 
 Use @PostConstruct to initialize bean. Constructor does not use, because constructor is called before all other dependencies are implemented into this component.
